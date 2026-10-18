@@ -1,0 +1,238 @@
+:root {
+    color-scheme: light;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #34281e;
+    background: #fff0d3;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: #fff0d3;
+}
+
+a {
+    color: #88552f;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #633d23;
+    text-decoration: underline;
+}
+
+.site-header {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    background: #ad7548;
+    border-bottom: 3px solid #d5a06d;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #fffaf3;
+}
+
+.brand:hover {
+    color: #fffaf3;
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 37px;
+    height: 37px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #fffaf3;
+}
+
+.brand-mark svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: #493625;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+}
+
+.brand-name {
+    font-size: 15px;
+    letter-spacing: 0.02em;
+}
+
+.brand-name strong {
+    font-weight: 700;
+}
+
+.login-stage {
+    min-height: calc(100vh - 54px);
+    display: grid;
+    place-items: center;
+    padding: 34px 20px;
+}
+
+.login-card {
+    width: min(100%, 390px);
+    padding: 30px 34px 26px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 34px rgb(112 76 43 / 8%);
+    text-align: center;
+}
+
+.coffee-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 13px;
+    border-radius: 50%;
+    background: #fff0d3;
+}
+
+.coffee-icon svg {
+    width: 27px;
+    height: 27px;
+    fill: none;
+    stroke: #88552f;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+h1 {
+    margin: 0;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.intro {
+    margin: 7px 0 22px;
+    color: #81766c;
+    font-size: 13px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.login-form label {
+    margin-bottom: 7px;
+    color: #493c31;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.login-form input {
+    width: 100%;
+    height: 43px;
+    margin-bottom: 16px;
+    padding: 0 12px;
+    border: 1px solid #e5ddd5;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: #34281e;
+    font: inherit;
+    font-size: 14px;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.login-form input::placeholder {
+    color: #aaa198;
+}
+
+.login-form input:focus {
+    border-color: #ad7548;
+    box-shadow: 0 0 0 3px rgb(173 117 72 / 16%);
+}
+
+.password-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.password-label a {
+    margin-bottom: 7px;
+    font-size: 12px;
+}
+
+.login-form button {
+    min-height: 44px;
+    margin-top: 1px;
+    border: 0;
+    border-radius: 999px;
+    background: #08b568;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.login-form button:hover {
+    background: #079b59;
+}
+
+.login-form button:active {
+    transform: translateY(1px);
+}
+
+.login-form button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #493625;
+    outline-offset: 3px;
+}
+
+.signup-prompt {
+    margin: 19px 0 0;
+    color: #81766c;
+    font-size: 12px;
+}
+
+.signup-prompt a {
+    font-weight: 600;
+}
+
+@media (max-width: 420px) {
+    .site-header {
+        padding: 0 16px;
+    }
+
+    .login-stage {
+        padding: 24px 16px;
+    }
+
+    .login-card {
+        padding: 28px 24px 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
