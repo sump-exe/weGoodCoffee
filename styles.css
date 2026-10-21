@@ -214,6 +214,89 @@ a:focus-visible {
     font-weight: 600;
 }
 
+.admin-stage {
+    min-height: calc(100vh - 54px);
+    padding: 42px 24px;
+    background: #fff0d3;
+}
+
+.admin-content {
+    padding: 26px;
+    border: 1px solid #eadbc9;
+    border-radius: 16px;
+    background: #fffaf3;
+    box-shadow: 0 12px 34px rgb(112 76 43 / 8%);
+}
+
+.admin-heading {
+    margin-bottom: 20px;
+}
+
+.admin-heading h1 {
+    color: #493625;
+}
+
+.admin-add-button,
+.admin-edit-button {
+    border: 1px solid #88552f;
+    background: #88552f;
+    color: #fffaf3;
+}
+
+.admin-add-button:hover,
+.admin-edit-button:hover {
+    border-color: #633d23;
+    background: #633d23;
+    color: #fffaf3;
+}
+
+.admin-delete-button {
+    border: 1px solid #ad5d45;
+    background: transparent;
+    color: #914832;
+}
+
+.admin-delete-button:hover {
+    border-color: #914832;
+    background: #914832;
+    color: #fffaf3;
+}
+
+.admin-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #eadbc9;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.admin-table {
+    color: #493c31;
+}
+
+.admin-table thead th {
+    padding: 14px 16px;
+    border-bottom-color: #eadbc9;
+    background: #f7ead7;
+    color: #633d23;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-table tbody td {
+    padding: 14px 16px;
+    border-color: #f0e7dd;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fff0d3;
+    color: #754b2d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
 @media (max-width: 420px) {
     .site-header {
         padding: 0 16px;
@@ -221,6 +304,14 @@ a:focus-visible {
 
     .login-stage {
         padding: 24px 16px;
+    }
+
+    .admin-stage {
+        padding: 24px 16px;
+    }
+
+    .admin-content {
+        padding: 20px 14px;
     }
 
     .login-card {

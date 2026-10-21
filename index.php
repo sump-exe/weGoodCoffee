@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="#" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span>
+        <a class="brand" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span>
         </a>
     </header>
 
