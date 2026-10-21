@@ -6,26 +6,19 @@
     <meta name="theme-color" content="#ad7548">
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="#" aria-label="WeGoodCoffee home">
-            <!--<span class="brand-mark" aria-hidden="true">
-                <svg viewBox="0 0 32 32" role="presentation">
-                    <path d="M8 13h14v7a7 7 0 0 1-7 7h-1a6 6 0 0 1-6-6v-8Z" />
-                    <path d="M22 15h2a3 3 0 0 1 0 6h-3M11 9c0-2 2-2 2-4m4 4c0-2 2-2 2-4M7 29h18" />
-                </svg>
-            </span>-->
-            <span class="brand-name">WeGood<strong>Coffee</strong></span>
+        <a class="brand" href="#" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span>
         </a>
     </header>
 
+    <a href="admin.php">For testing purposes | Admin page</a>
+
     <main class="login-stage">
         <section class="login-card" aria-labelledby="login-title">
-            <!--<div class="coffee-icon" aria-hidden="true">
-                <svg viewBox="0 0 32 32" role="presentation">
-                    <path d="M7 13h16v7a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7v-7Zm16 2h2a3 3 0 0 1 0 6h-3M11 9c0-2 2-2 2-4m4 4c0-2 2-2 2-4M5 29h22" />
-                </svg>-->
             </div>
             <h1 id="login-title">Welcome Back!<br><br></h1>
 
