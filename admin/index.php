@@ -1,9 +1,31 @@
+<?php
+require_once __DIR__ . '/../_conn.php';
+
+$users = [];
+$loadError = '';
+$notices = [
+    'added' => 'User added successfully.',
+    'updated' => 'User updated successfully.',
+    'deleted' => 'User deleted successfully.',
+];
+$status = $_GET['status'] ?? '';
+$notice = is_string($status) ? ($notices[$status] ?? '') : '';
+
+try {
+    $result = $conn->query('SELECT id, username, role FROM users ORDER BY id');
+    $users = $result->fetch_all(MYSQLI_ASSOC);
+    $result->free();
+} catch (mysqli_sql_exception $exception) {
+    error_log($exception->getMessage());
+    $loadError = 'Unable to load users. Check the database connection and users table.';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Admin | WeGoodCoffee</title>
 </head>
@@ -21,9 +43,16 @@
                         <h1 id="users-title">Users</h1>
                     </div>
                     <div class="col-auto">
-                        <button class="btn admin-add-button" type="button">Add User</button>
+                        <a class="btn admin-add-button" href="addUser.php">Add User</a>
                     </div>
                 </div>
+
+                <?php if ($notice !== ''): ?>
+                    <div class="alert alert-success" role="status"><?= htmlspecialchars($notice, ENT_QUOTES, 'UTF-8') ?></div>
+                <?php endif; ?>
+                <?php if ($loadError !== ''): ?>
+                    <div class="alert alert-danger" role="alert"><?= htmlspecialchars($loadError, ENT_QUOTES, 'UTF-8') ?></div>
+                <?php endif; ?>
 
                 <div class="row">
                     <div class="col-12">
@@ -38,28 +67,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>admin</td>
-                                        <td><span class="role-badge">Admin</span></td>
-                                        <td>
-                                            <div class="d-flex justify-content-end gap-2">
-                                                <button class="btn btn-sm admin-edit-button" type="button">Edit</button>
-                                                <button class="btn btn-sm admin-delete-button" type="button">Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>barista</td>
-                                        <td><span class="role-badge">Staff</span></td>
-                                        <td>
-                                            <div class="d-flex justify-content-end gap-2">
-                                                <button class="btn btn-sm admin-edit-button" type="button">Edit</button>
-                                                <button class="btn btn-sm admin-delete-button" type="button">Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <?php if ($users === []): ?>
+                                        <tr>
+                                            <td class="text-center text-muted py-4" colspan="4">No users found.</td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <?php foreach ($users as $user): ?>
+                                            <tr>
+                                                <th scope="row"><?= htmlspecialchars((string) $user['id'], ENT_QUOTES, 'UTF-8') ?></th>
+                                                <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><span class="role-badge"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $user['role'])), ENT_QUOTES, 'UTF-8') ?></span></td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end gap-2">
+                                                        <a class="btn btn-sm admin-edit-button" href="editUser.php?id=<?= rawurlencode((string) $user['id']) ?>">Edit</a>
+                                                        <a class="btn btn-sm admin-delete-button" href="deleteUser.php?id=<?= rawurlencode((string) $user['id']) ?>">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -68,6 +94,5 @@
             </section>
         </div>
     </main>
-    
 </body>
 </html>

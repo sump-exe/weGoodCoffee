@@ -15,7 +15,7 @@
         </a>
     </header>
 
-    <a href="admin.php">For testing purposes | Admin page</a>
+    <a href="admin\index.php">For testing purposes | Admin page</a>
 
     <main class="login-stage">
         <section class="login-card" aria-labelledby="login-title">
