@@ -156,7 +156,6 @@ foreach ($submittedCart as $cartEntry) {
                     <h1>Point of Sale</h1>
                     <p class="text-muted mb-0">Choose items to add them to the order.</p>
                 </div>
-                <a class="btn btn-outline-secondary" href="../manager/index.php">Manager</a>
             </div>
 
             <?php if ($orderIdFromQuery !== false && $orderIdFromQuery !== null): ?>
