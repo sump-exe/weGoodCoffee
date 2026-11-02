@@ -7,6 +7,6 @@
     <title>POS</title>
 </head>
 <body>
-    
+    <button class="btn btn-primary" onclick="window.location.href='menuItems.php'">Menu Items</button>
 </body>
 </html>
