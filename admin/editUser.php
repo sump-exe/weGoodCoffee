@@ -68,65 +68,45 @@ $role = $requestMethod === 'POST' && is_string($roleInput)
     ? $roleInput
     : ($user['role'] ?? '');
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <title>Edit User | WeGoodCoffee</title>
-</head>
-<body>
-    <header class="site-header">
-        <a class="brand" href="index.php" aria-label="WeGoodCoffee admin home"><span class="brand-name">WeGood<strong>Coffee</strong></span></a>
-    </header>
-
-    <main class="admin-stage container-fluid">
-        <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form method="post">
-                        <input type="hidden" name="id" value="<?= htmlspecialchars((string) $userId, ENT_QUOTES, 'UTF-8') ?>">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="userModalLabel">Edit User</h1>
-                            <a class="btn-close" href="index.php" aria-label="Close"></a>
-                        </div>
-                        <div class="modal-body">
-                            <?php if ($error !== ''): ?>
-                                <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
-                            <?php endif; ?>
-                            <?php if ($user !== null): ?>
-                                <div class="mb-3">
-                                    <label class="form-label" for="username">Username</label>
-                                    <input class="form-control" id="username" name="username" type="text" maxlength="100" value="<?= htmlspecialchars($username, ENT_QUOTES, 'UTF-8') ?>" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="role">Role</label>
-                                    <select class="form-select" id="role" name="role" required>
-                                        <?php foreach ($roles as $availableRole): ?>
-                                            <option value="<?= htmlspecialchars($availableRole, ENT_QUOTES, 'UTF-8') ?>" <?= $role === $availableRole ? 'selected' : '' ?>><?= htmlspecialchars(ucwords(str_replace('_', ' ', $availableRole)), ENT_QUOTES, 'UTF-8') ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="form-label" for="password">New password <span class="text-muted">(leave blank to keep current password)</span></label>
-                                    <input class="form-control" id="password" name="password" type="password" autocomplete="new-password">
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-secondary" href="index.php">Cancel</a>
-                            <?php if ($user !== null): ?>
-                                <button class="btn admin-edit-button" type="submit">Save Changes</button>
-                            <?php endif; ?>
-                        </div>
-                    </form>
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="<?= htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') ?>" method="post">
+                <input type="hidden" name="id" value="<?= htmlspecialchars((string) $userId, ENT_QUOTES, 'UTF-8') ?>">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="userModalLabel">Edit User</h1>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
+                <div class="modal-body">
+                    <?php if ($error !== ''): ?>
+                        <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+                    <?php endif; ?>
+                    <?php if ($user !== null): ?>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" id="username" name="username" type="text" maxlength="100" value="<?= htmlspecialchars($username, ENT_QUOTES, 'UTF-8') ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="role">Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <?php foreach ($roles as $availableRole): ?>
+                                    <option value="<?= htmlspecialchars($availableRole, ENT_QUOTES, 'UTF-8') ?>" <?= $role === $availableRole ? 'selected' : '' ?>><?= htmlspecialchars(ucwords(str_replace('_', ' ', $availableRole)), ENT_QUOTES, 'UTF-8') ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="password">New password <span class="text-muted">(leave blank to keep current password)</span></label>
+                            <input class="form-control" id="password" name="password" type="password" autocomplete="new-password">
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <?php if ($user !== null): ?>
+                        <button class="btn admin-edit-button" type="submit">Save Changes</button>
+                    <?php endif; ?>
+                </div>
+            </form>
         </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script>new bootstrap.Modal(document.getElementById('userModal')).show();</script>
-</body>
-</html>
+    </div>
+</div>

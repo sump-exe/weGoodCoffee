@@ -94,5 +94,81 @@ try {
             </section>
         </div>
     </main>
+    <div id="user-modal-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const modalContainer = document.getElementById('user-modal-container');
+
+        async function loadUserModal(url, options = {}) {
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (response.redirected) {
+                window.location.assign(response.url);
+                return;
+            }
+
+            const markup = await response.text();
+            const currentModal = modalContainer.querySelector('.modal.show');
+            if (currentModal) {
+                await new Promise(resolve => {
+                    currentModal.addEventListener('hidden.bs.modal', resolve, { once: true });
+                    bootstrap.Modal.getInstance(currentModal).hide();
+                });
+            }
+
+            modalContainer.innerHTML = markup;
+            const modalElement = modalContainer.querySelector('.modal');
+
+            if (!modalElement) {
+                throw new Error('Unable to load the user form. Please try again.');
+            }
+
+            bootstrap.Modal.getOrCreateInstance(modalElement).show();
+        }
+
+        document.addEventListener('click', event => {
+            const link = event.target.closest('a');
+            if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                return;
+            }
+
+            const url = new URL(link.href);
+            if (!['addUser.php', 'editUser.php', 'deleteUser.php'].includes(url.pathname.split('/').pop())) {
+                return;
+            }
+
+            event.preventDefault();
+            loadUserModal(url.href).catch(error => {
+                window.alert(error.message);
+            });
+        });
+
+        modalContainer.addEventListener('submit', event => {
+            const form = event.target.closest('form');
+            if (!form) {
+                return;
+            }
+
+            event.preventDefault();
+            loadUserModal(form.action || window.location.href, {
+                method: form.method || 'POST',
+                body: new FormData(form)
+            }).catch(error => {
+                window.alert(error.message);
+            });
+        });
+
+        modalContainer.addEventListener('hidden.bs.modal', event => {
+            if (event.target === modalContainer.querySelector('.modal')) {
+                modalContainer.replaceChildren();
+            }
+        });
+    </script>
 </body>
 </html>
