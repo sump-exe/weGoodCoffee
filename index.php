@@ -1,14 +1,17 @@
 <?php
-session_start();
+require_once __DIR__ . '/_session.php';
+app_session_start();
 
 $error = '';
 $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-$destinationByRole = [
-    'admin' => 'admin/index.php',
-    'cashier' => 'pos/index.php',
-    'manager' => 'manager/index.php',
-    'inventory_staff' => 'invStaff/index.php',
-];
+$roleHome = isset($_SESSION['role']) && is_string($_SESSION['role'])
+    ? app_role_home($_SESSION['role'])
+    : null;
+
+if (isset($_SESSION['user_id']) && $roleHome !== null) {
+    header('Location: ' . $roleHome);
+    exit;
+}
 
 if ($requestMethod === 'POST') {
     require_once __DIR__ . '/_conn.php';
@@ -28,15 +31,18 @@ if ($requestMethod === 'POST') {
             $user = $result->fetch_assoc();
             $statement->close();
 
-            if ($user === null || !password_verify($password, $user['password']) || !isset($destinationByRole[$user['role']])) {
+            $roleHome = $user !== null ? app_role_home($user['role']) : null;
+            if ($user === null || !password_verify($password, $user['password']) || $roleHome === null) {
                 $error = 'Invalid username or password.';
             } else {
                 session_regenerate_id(true);
+                $_SESSION = [];
                 $_SESSION['user_id'] = (int) $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
+                $_SESSION['last_activity'] = time();
 
-                header('Location: ' . $destinationByRole[$user['role']]);
+                header('Location: ' . $roleHome);
                 exit;
             }
         } catch (mysqli_sql_exception $exception) {
@@ -67,6 +73,11 @@ if ($requestMethod === 'POST') {
         <section class="login-card" aria-labelledby="login-title">
             <h1 id="login-title">Welcome Back!<br><br></h1>
 
+            <?php if (($_GET['expired'] ?? '') === '1'): ?>
+                <div class="alert alert-warning" role="status">Your session ended after 5 minutes of inactivity. Please log in again.</div>
+            <?php elseif (($_GET['logged_out'] ?? '') === '1'): ?>
+                <div class="alert alert-success" role="status">You have been logged out.</div>
+            <?php endif; ?>
             <?php if ($error !== ''): ?>
                 <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
             <?php endif; ?>

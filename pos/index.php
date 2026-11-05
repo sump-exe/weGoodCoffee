@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../_session.php';
+app_require_role('cashier');
 require_once __DIR__ . '/../_conn.php';
 
 $categories = ['Drinks' => [], 'Food' => []];
@@ -147,6 +149,9 @@ foreach ($submittedCart as $cartEntry) {
 <body>
     <header class="site-header">
         <a class="brand" href="../index.php" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span></a>
+        <form class="ms-auto" action="../logout.php" method="post">
+            <button class="btn btn-sm btn-light" type="submit">Log out</button>
+        </form>
     </header>
 
     <main class="pos-page container-fluid">

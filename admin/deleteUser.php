@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../_session.php';
+app_require_role('admin');
 require_once __DIR__ . '/../_conn.php';
 
 $userId = filter_var($_POST['id'] ?? $_GET['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
