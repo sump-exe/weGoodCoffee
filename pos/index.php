@@ -167,9 +167,20 @@ foreach ($submittedCart as $cartEntry) {
 
             <div class="row g-4 align-items-start">
                 <div class="col-12 col-xl-9">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold" for="menuSearch">Search menu items</label>
+                        <input
+                            class="form-control"
+                            type="search"
+                            id="menuSearch"
+                            placeholder="Search by item, category, or subcategory"
+                            autocomplete="off"
+                        >
+                    </div>
+                    <p class="text-muted" id="menuSearchEmpty" role="status" hidden>No menu items match your search.</p>
                     <div class="row g-4">
                         <?php foreach (['Drinks', 'Food'] as $category): ?>
-                            <div class="col-12 col-md-6">
+                            <div class="col-12 col-md-6 pos-category-column">
                                 <section class="pos-panel pos-category" aria-labelledby="<?= strtolower($category) ?>Heading">
                                     <h2 class="h3 mb-4" id="<?= strtolower($category) ?>Heading"><?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?></h2>
                                     <?php if ($categories[$category] === []): ?>
@@ -185,6 +196,7 @@ foreach ($submittedCart as $cartEntry) {
                                                         data-item-id="<?= (int) $item['id'] ?>"
                                                         data-item-name="<?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?>"
                                                         data-item-price="<?= (int) $item['price'] ?>"
+                                                        data-search-text="<?= htmlspecialchars($category . ' ' . $subCategory . ' ' . $item['name'], ENT_QUOTES, 'UTF-8') ?>"
                                                     >
                                                         <span><?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?></span>
                                                         <span class="pos-item-price">₱<?= number_format((int) $item['price']) ?></span>
@@ -247,6 +259,33 @@ foreach ($submittedCart as $cartEntry) {
         function formatPrice(price) {
             return '₱' + new Intl.NumberFormat('en-PH', { maximumFractionDigits: 0 }).format(price);
         }
+
+        document.getElementById('menuSearch').addEventListener('input', function (event) {
+            var query = event.target.value.trim().toLocaleLowerCase();
+            var matchingItems = 0;
+
+            document.querySelectorAll('.pos-category-column').forEach(function (column) {
+                var columnMatches = 0;
+
+                column.querySelectorAll('.pos-subcategory').forEach(function (subcategory) {
+                    var subcategoryMatches = 0;
+                    subcategory.querySelectorAll('.pos-item').forEach(function (button) {
+                        var matches = button.dataset.searchText.toLocaleLowerCase().includes(query);
+                        button.hidden = !matches;
+                        if (matches) {
+                            subcategoryMatches++;
+                            columnMatches++;
+                        }
+                    });
+                    subcategory.hidden = query !== '' && subcategoryMatches === 0;
+                });
+
+                column.hidden = query !== '' && columnMatches === 0;
+                matchingItems += columnMatches;
+            });
+
+            document.getElementById('menuSearchEmpty').hidden = query === '' || matchingItems > 0;
+        });
 
         function renderCart() {
             cartItems.replaceChildren();
