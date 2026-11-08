@@ -62,6 +62,23 @@ function app_session_start(): void
 
 function app_end_session(): void
 {
+    global $conn;
+
+    $sessionLogId = $_SESSION['session_log_id'] ?? null;
+    if (is_int($sessionLogId) && $sessionLogId > 0) {
+        try {
+            require_once __DIR__ . '/_conn.php';
+            $statement = $conn->prepare(
+                'UPDATE sessions SET time_out = CURRENT_TIMESTAMP WHERE id = ? AND time_out IS NULL'
+            );
+            $statement->bind_param('i', $sessionLogId);
+            $statement->execute();
+            $statement->close();
+        } catch (mysqli_sql_exception $exception) {
+            error_log($exception->getMessage());
+        }
+    }
+
     $_SESSION = [];
 
     if (ini_get('session.use_cookies')) {

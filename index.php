@@ -14,8 +14,6 @@ if (isset($_SESSION['user_id']) && $roleHome !== null) {
 }
 
 if ($requestMethod === 'POST') {
-    require_once __DIR__ . '/_conn.php';
-
     $username = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
 
@@ -23,6 +21,8 @@ if ($requestMethod === 'POST') {
         $error = 'Enter your username and password.';
     } else {
         try {
+            require_once __DIR__ . '/_conn.php';
+
             $statement = $conn->prepare('SELECT id, username, password, role FROM users WHERE username = ?');
             $username = trim($username);
             $statement->bind_param('s', $username);
@@ -41,6 +41,16 @@ if ($requestMethod === 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['last_activity'] = time();
+
+                try {
+                    $sessionStatement = $conn->prepare('INSERT INTO sessions (username, role) VALUES (?, ?)');
+                    $sessionStatement->bind_param('ss', $user['username'], $user['role']);
+                    $sessionStatement->execute();
+                    $_SESSION['session_log_id'] = (int) $conn->insert_id;
+                    $sessionStatement->close();
+                } catch (mysqli_sql_exception $exception) {
+                    error_log($exception->getMessage());
+                }
 
                 header('Location: ' . $roleHome);
                 exit;
