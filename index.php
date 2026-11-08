@@ -84,12 +84,23 @@ if ($requestMethod === 'POST') {
             <h1 id="login-title">Welcome Back!<br><br></h1>
 
             <?php if (($_GET['expired'] ?? '') === '1'): ?>
-                <div class="alert alert-warning" role="status">Your session ended after 5 minutes of inactivity. Please log in again.</div>
+                <div class="alert alert-warning alert-dismissible" role="status">
+                    Your session ended after 5 minutes of inactivity. Please log in again.
+                    <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
+                </div>
             <?php elseif (($_GET['logged_out'] ?? '') === '1'): ?>
-                <div class="alert alert-success" role="status">You have been logged out.</div>
+                <div class="alert alert-success alert-dismissible" role="status">
+                    You have been logged out.
+                    <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
+                </div>
             <?php endif; ?>
             <?php if ($error !== ''): ?>
-                <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+                <div class="alert alert-danger<?= $error === 'Invalid username or password.' ? ' alert-dismissible' : '' ?>" role="alert">
+                    <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+                    <?php if ($error === 'Invalid username or password.'): ?>
+                        <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
 
             <form class="login-form" action="" method="post">
@@ -105,5 +116,13 @@ if ($requestMethod === 'POST') {
             </form>
         </section>
     </main>
+    <script>
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest('[data-dismiss-alert]');
+            if (button) {
+                button.closest('.alert').remove();
+            }
+        });
+    </script>
 </body>
 </html>
