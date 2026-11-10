@@ -35,7 +35,16 @@ try {
     <header class="site-header">
         <a class="brand" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span>
         </a>
-        <form class="ms-auto" action="../logout.php" method="post">
+        <div class="dropdown ms-auto me-3">
+            <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Admin Menu
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item active" href="index.php" aria-current="page">Users</a></li>
+                <li><a class="dropdown-item" href="sessions.php">View Sessions</a></li>
+            </ul>
+        </div>
+        <form action="../logout.php" method="post">
             <button class="btn btn-sm btn-light" type="submit">Log out</button>
         </form>
     </header>
