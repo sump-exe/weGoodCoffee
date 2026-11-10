@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2026 at 03:53 PM
+-- Generation Time: Nov 10, 2026 at 02:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -167,6 +167,20 @@ CREATE TABLE `sessions` (
   `time_out` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `username`, `role`, `time_in`, `time_out`) VALUES
+(2, 'admin', 'admin', '2026-11-08 22:18:14', '2026-11-08 22:18:16'),
+(3, 'admin', 'admin', '2026-11-08 22:18:21', '2026-11-08 22:18:26'),
+(4, 'cashier', 'cashier', '2026-11-08 22:21:14', '2026-11-08 22:21:54'),
+(5, 'admin', 'admin', '2026-11-08 22:24:29', '2026-11-08 22:30:31'),
+(6, 'admin', 'admin', '2026-11-08 22:32:08', '2026-11-08 22:37:46'),
+(7, 'admin', 'admin', '2026-11-10 21:37:44', '2026-11-10 21:37:56'),
+(8, 'cashier', 'cashier', '2026-11-10 21:42:07', '2026-11-10 21:42:12'),
+(9, 'cashier', 'cashier', '2026-11-10 21:46:49', '2026-11-10 21:46:52');
+
 -- --------------------------------------------------------
 
 --
@@ -247,7 +261,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
