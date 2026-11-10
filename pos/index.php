@@ -1,125 +1,13 @@
 <?php
+define('POS_PAGE', true);
 require_once __DIR__ . '/../_session.php';
 app_require_role('cashier');
 require_once __DIR__ . '/../_conn.php';
+require_once __DIR__ . '/menu.php';
+require_once __DIR__ . '/currentOrder.php';
 
-$categories = ['Drinks' => [], 'Food' => []];
-$error = '';
-$submittedCart = [];
-$orderId = null;
-
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-    $cartInput = $_POST['cart'] ?? '';
-    $decodedCart = is_string($cartInput) ? json_decode($cartInput, true) : null;
-
-    if (!is_array($decodedCart) || $decodedCart === []) {
-        $error = 'Add at least one menu item to the order.';
-    } else {
-        $submittedCart = $decodedCart;
-        $validatedCart = [];
-
-        foreach ($decodedCart as $cartEntry) {
-            if (
-                !is_array($cartEntry)
-                || !isset($cartEntry['id'], $cartEntry['quantity'])
-                || filter_var($cartEntry['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) === false
-                || filter_var($cartEntry['quantity'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 99]]) === false
-            ) {
-                $error = 'The order contains an invalid item or quantity.';
-                break;
-            }
-
-            $itemId = (int) $cartEntry['id'];
-            $quantity = (int) $cartEntry['quantity'];
-            $validatedCart[$itemId] = ($validatedCart[$itemId] ?? 0) + $quantity;
-
-            if ($validatedCart[$itemId] > 99) {
-                $error = 'An item quantity cannot exceed 99.';
-                break;
-            }
-        }
-
-        if ($error === '' && $validatedCart === []) {
-            $error = 'Add at least one menu item to the order.';
-        }
-
-        if ($error === '') {
-            $transactionStarted = false;
-            try {
-                $conn->begin_transaction();
-                $transactionStarted = true;
-
-                $orderStatement = $conn->prepare('INSERT INTO orders () VALUES ()');
-                $orderStatement->execute();
-                $orderId = $conn->insert_id;
-                $orderStatement->close();
-
-                $menuStatement = $conn->prepare('SELECT price FROM menu_items WHERE id = ?');
-                $itemStatement = $conn->prepare('INSERT INTO order_items (order_id, menu_item_id, quantity, unit_price) VALUES (?, ?, ?, ?)');
-
-                foreach ($validatedCart as $itemId => $quantity) {
-                    $menuStatement->bind_param('i', $itemId);
-                    $menuStatement->execute();
-                    $menuResult = $menuStatement->get_result();
-                    $menuItem = $menuResult->fetch_assoc();
-                    $menuResult->free();
-
-                    if ($menuItem === null) {
-                        $error = 'One or more selected items no longer exist. Please review the order.';
-                        break;
-                    }
-
-                    $unitPrice = (int) $menuItem['price'];
-                    $itemStatement->bind_param('iiii', $orderId, $itemId, $quantity, $unitPrice);
-                    $itemStatement->execute();
-                }
-
-                $menuStatement->close();
-                $itemStatement->close();
-
-                if ($error !== '') {
-                    $conn->rollback();
-                    $transactionStarted = false;
-                } else {
-                    $conn->commit();
-                    header('Location: index.php?order=' . (int) $orderId);
-                    exit;
-                }
-            } catch (mysqli_sql_exception $exception) {
-                if ($transactionStarted) {
-                    $conn->rollback();
-                }
-                error_log($exception->getMessage());
-                $error = 'Unable to save the order. Please review the cart and try again.';
-            }
-        }
-    }
-}
-
-try {
-    $result = $conn->query('SELECT id, name, price, category, sub_category FROM menu_items ORDER BY category, sub_category, name, id');
-    while ($item = $result->fetch_assoc()) {
-        if (isset($categories[$item['category']])) {
-            $categories[$item['category']][$item['sub_category']][] = $item;
-        }
-    }
-    $result->free();
-} catch (mysqli_sql_exception $exception) {
-    error_log($exception->getMessage());
-    $error = 'Unable to load the menu. Please try again.';
-}
-
-$orderIdFromQuery = filter_var($_GET['order'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
-$initialCart = [];
-foreach ($submittedCart as $cartEntry) {
-    if (is_array($cartEntry) && isset($cartEntry['id'], $cartEntry['quantity'])) {
-        $itemId = filter_var($cartEntry['id'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
-        $quantity = filter_var($cartEntry['quantity'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => 99]]);
-        if ($itemId !== false && $quantity !== false) {
-            $initialCart[] = ['id' => $itemId, 'quantity' => $quantity];
-        }
-    }
-}
+$orderState = pos_process_order($conn);
+$menuState = pos_load_menu($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,76 +51,18 @@ foreach ($submittedCart as $cartEntry) {
                 </div>
             </div>
 
-            <?php if ($orderIdFromQuery !== false && $orderIdFromQuery !== null): ?>
-                <div class="alert alert-success" role="status">Order #<?= (int) $orderIdFromQuery ?> saved successfully.</div>
+            <?php if ($orderState['orderId'] !== false && $orderState['orderId'] !== null): ?>
+                <div class="alert alert-success" role="status">Order #<?= (int) $orderState['orderId'] ?> saved successfully.</div>
             <?php endif; ?>
-            <?php if ($error !== ''): ?>
-                <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
-            <?php endif; ?>
+            <?php foreach ([$orderState['error'], $menuState['error']] as $error): ?>
+                <?php if ($error !== ''): ?>
+                    <div class="alert alert-danger" role="alert"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
             <div class="row g-4 align-items-start">
-                <div class="col-12 col-xl-9">
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold" for="menuSearch">Search menu items</label>
-                        <input
-                            class="form-control"
-                            type="search"
-                            id="menuSearch"
-                            placeholder="Search by item, category, or subcategory"
-                            autocomplete="off"
-                        >
-                    </div>
-                    <p class="text-muted" id="menuSearchEmpty" role="status" hidden>No menu items match your search.</p>
-                    <div class="row g-4">
-                        <?php foreach (['Drinks', 'Food'] as $category): ?>
-                            <div class="col-12 col-md-6 pos-category-column">
-                                <section class="pos-panel pos-category" aria-labelledby="<?= strtolower($category) ?>Heading">
-                                    <h2 class="h3 mb-4" id="<?= strtolower($category) ?>Heading"><?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?></h2>
-                                    <?php if ($categories[$category] === []): ?>
-                                        <p class="text-muted mb-0">No <?= htmlspecialchars(strtolower($category), ENT_QUOTES, 'UTF-8') ?> available.</p>
-                                    <?php else: ?>
-                                        <?php foreach ($categories[$category] as $subCategory => $items): ?>
-                                            <section class="pos-subcategory" aria-label="<?= htmlspecialchars($subCategory, ENT_QUOTES, 'UTF-8') ?>">
-                                                <h3 class="pos-subcategory-title"><?= htmlspecialchars($subCategory, ENT_QUOTES, 'UTF-8') ?></h3>
-                                                <?php foreach ($items as $item): ?>
-                                                    <button
-                                                        class="pos-item"
-                                                        type="button"
-                                                        data-item-id="<?= (int) $item['id'] ?>"
-                                                        data-item-name="<?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?>"
-                                                        data-item-price="<?= (int) $item['price'] ?>"
-                                                        data-search-text="<?= htmlspecialchars($category . ' ' . $subCategory . ' ' . $item['name'], ENT_QUOTES, 'UTF-8') ?>"
-                                                    >
-                                                        <span><?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?></span>
-                                                        <span class="pos-item-price">₱<?= number_format((int) $item['price']) ?></span>
-                                                    </button>
-                                                <?php endforeach; ?>
-                                            </section>
-                                        <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </section>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <aside class="col-12 col-xl-3" aria-labelledby="cartHeading">
-                    <section class="pos-panel pos-cart">
-                        <h2 class="h4 mb-3" id="cartHeading">Current Order</h2>
-                        <div class="pos-cart-list" id="cartItems" aria-live="polite">
-                            <p class="text-muted mb-0" id="emptyCart">No items added yet.</p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
-                            <strong>Total</strong>
-                            <strong id="cartTotal">₱0</strong>
-                        </div>
-                        <form method="post" id="checkoutForm" class="mt-3">
-                            <input type="hidden" name="cart" id="cartInput" value="">
-                            <button class="btn admin-add-button w-100" type="submit" id="checkoutButton" disabled>Place Order</button>
-                        </form>
-                        <button class="btn btn-outline-secondary w-100 mt-2" type="button" id="clearCartButton" disabled>Clear Order</button>
-                    </section>
-                </aside>
+                <?php pos_render_menu($menuState['categories']); ?>
+                <?php pos_render_current_order(); ?>
             </div>
         </div>
     </main>
@@ -248,7 +78,7 @@ foreach ($submittedCart as $cartEntry) {
         });
 
         var cart = new Map();
-        var initialCart = <?= json_encode($initialCart, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+        var initialCart = <?= json_encode($orderState['initialCart'], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
         initialCart.forEach(function (entry) {
             if (menuItems[entry.id]) {
                 cart.set(entry.id, entry.quantity);
