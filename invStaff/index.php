@@ -7,16 +7,19 @@ app_require_role('inventory_staff');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../styles.css?v=2">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Inventory Staff | WeGoodCoffee</title>
 </head>
 <body>
     <header class="site-header">
         <a class="brand" href="../index.php" aria-label="WeGoodCoffee home"><span class="brand-name">WeGood<strong>Coffee</strong></span></a>
-        <form class="ms-auto" action="../logout.php" method="post">
-            <button class="btn btn-sm btn-light" type="submit">Log out</button>
-        </form>
+        <div class="d-flex align-items-center gap-3 ms-auto">
+            <?php app_render_user_profile(); ?>
+            <form action="../logout.php" method="post">
+                <button class="btn btn-sm btn-light" type="submit">Log out</button>
+            </form>
+        </div>
     </header>
     <main class="admin-stage container-fluid">
         <div class="container">

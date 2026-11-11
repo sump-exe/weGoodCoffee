@@ -128,3 +128,14 @@ function app_require_role(string ...$allowedRoles): void
         exit;
     }
 }
+
+function app_render_user_profile(): void
+{
+    $username = $_SESSION['username'] ?? '';
+    ?>
+    <div class="user-profile">
+        <img src="<?= htmlspecialchars(app_base_path() . '/img/profile.png', ENT_QUOTES, 'UTF-8') ?>" alt="">
+        <span><?= htmlspecialchars((string) $username, ENT_QUOTES, 'UTF-8') ?></span>
+    </div>
+    <?php
+}

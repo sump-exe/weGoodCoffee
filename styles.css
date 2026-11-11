@@ -31,12 +31,31 @@ a:hover {
 }
 
 .site-header {
-    height: 54px;
+    min-height: 54px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    gap: 12px;
     padding: 0 24px;
     background: #ad7548;
     border-bottom: 3px solid #d5a06d;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.user-profile img {
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .brand {
@@ -300,6 +319,10 @@ a:focus-visible {
 @media (max-width: 420px) {
     .site-header {
         padding: 0 16px;
+    }
+
+    .user-profile {
+        font-size: 12px;
     }
 
     .login-stage {
