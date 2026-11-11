@@ -14,21 +14,21 @@ $menuState = pos_load_menu($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css?v=2">
+    <link rel="stylesheet" href="../styles.css?v=4">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Point of Sale | WeGoodCoffee</title>
     <style>
         .pos-page { min-height: calc(100vh - 54px); padding: 28px 20px; }
-        .pos-panel { min-width: 0; padding: 22px; border: 1px solid #eadbc9; border-radius: 16px; background: #fffaf3; box-shadow: 0 8px 24px rgb(112 76 43 / 6%); }
+        .pos-panel { min-width: 0; padding: 22px; border: 1px solid var(--color-line); border-radius: 16px; background: var(--color-surface); box-shadow: 0 8px 24px rgb(83 40 59 / 8%); }
         .pos-category { height: 100%; }
         .pos-subcategory + .pos-subcategory { margin-top: 20px; }
-        .pos-subcategory-title { margin-bottom: 10px; color: #754b2d; font-size: 15px; font-weight: 700; }
-        .pos-item { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; padding: 10px 12px; border: 1px solid #eadbc9; border-radius: 9px; background: #fff; color: #493c31; text-align: left; }
-        .pos-item:hover, .pos-item:focus-visible { border-color: #ad7548; background: #fff5e7; }
-        .pos-item-price { flex: 0 0 auto; color: #754b2d; font-weight: 700; }
+        .pos-subcategory-title { margin-bottom: 10px; color: var(--color-teal); font-size: 15px; font-weight: 700; }
+        .pos-item { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; padding: 10px 12px; border: 1px solid var(--color-line); border-radius: 9px; background: #fffdf7; color: var(--color-ink); text-align: left; }
+        .pos-item:hover, .pos-item:focus-visible { border-color: var(--color-orange); background: var(--color-surface-alt); }
+        .pos-item-price { flex: 0 0 auto; color: var(--color-orange-deep); font-weight: 700; }
         .pos-cart { position: sticky; top: 16px; }
         .pos-cart-list { max-height: 48vh; overflow-y: auto; }
-        .pos-cart-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; padding: 12px 0; border-bottom: 1px solid #f0e7dd; }
+        .pos-cart-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; padding: 12px 0; border-bottom: 1px solid #f3e5d5; }
         .pos-cart-controls { display: flex; align-items: center; gap: 8px; }
         .pos-cart-controls button { min-width: 30px; }
         @media (max-width: 767.98px) { .pos-cart { position: static; } }
