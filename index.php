@@ -13,6 +13,9 @@ if (isset($_SESSION['user_id']) && $roleHome !== null) {
     exit;
 }
 
+$loggedOut = ($_SESSION['logged_out'] ?? false) === true;
+unset($_SESSION['logged_out']);
+
 if ($requestMethod === 'POST') {
     $username = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
@@ -88,7 +91,7 @@ if ($requestMethod === 'POST') {
                     Your session ended after 5 minutes of inactivity. Please log in again.
                     <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
                 </div>
-            <?php elseif (($_GET['logged_out'] ?? '') === '1'): ?>
+            <?php elseif ($loggedOut): ?>
                 <div class="alert alert-success alert-dismissible" role="status">
                     You have been logged out.
                     <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>

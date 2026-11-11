@@ -10,5 +10,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
 
 $expired = ($_GET['expired'] ?? '') === '1';
 app_end_session();
-header('Location: ' . app_base_path() . '/index.php' . ($expired ? '?expired=1' : '?logged_out=1'));
+
+if ($expired) {
+    header('Location: ' . app_base_path() . '/index.php?expired=1');
+} else {
+    session_start();
+    $_SESSION['logged_out'] = true;
+    header('Location: ' . app_base_path() . '/index.php');
+}
 exit;
