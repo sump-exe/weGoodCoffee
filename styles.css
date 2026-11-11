@@ -114,6 +114,13 @@ a:hover {
     text-align: center;
 }
 
+.login-logo {
+    display: block;
+    width: min(100%, 120px);
+    height: auto;
+    margin: 0 auto 20px;
+}
+
 .coffee-icon {
     width: 46px;
     height: 46px;

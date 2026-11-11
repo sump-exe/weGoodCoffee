@@ -69,7 +69,7 @@ if ($requestMethod === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ad7548">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=3">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 </head>
@@ -81,7 +81,7 @@ if ($requestMethod === 'POST') {
 
     <main class="login-stage">
         <section class="login-card" aria-labelledby="login-title">
-            <h1 id="login-title">Welcome Back!<br><br></h1>
+            <h1 id="login-title"><img class="login-logo" src="img/logo.png" alt="WeGoodCoffee"></h1>
 
             <?php if (($_GET['expired'] ?? '') === '1'): ?>
                 <div class="alert alert-warning alert-dismissible" role="status">
