@@ -114,7 +114,7 @@ $statusMessage = $status === 'updated'
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="index.php" aria-label="WeGoodCoffee manager home"><span class="brand-name">WeGood<strong>Coffee</strong></span></a>
+        <a class="brand" href="index.php" aria-label="WeGoodCoffee manager home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
         <div class="d-flex align-items-center gap-3 ms-auto">
             <?php app_render_user_profile(); ?>
             <form action="../logout.php" method="post">
