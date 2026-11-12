@@ -23,9 +23,17 @@ app_require_role('inventory_staff');
     </header>
     <main class="admin-stage container-fluid">
         <div class="container">
-            <section class="admin-content" aria-labelledby="inventory-title">
+            <section class="mb-4" aria-labelledby="inventory-title">
                 <h1 id="inventory-title">Inventory Staff</h1>
             </section>
+            <div class="row g-4 align-items-start">
+                <div class="col-md-8">
+                    <?php require __DIR__ . '/inventoryList.php'; ?>
+                </div>
+                <div class="col-md-4">
+                    <?php require __DIR__ . '/menuItemList.php'; ?>
+                </div>
+            </div>
         </div>
     </main>
     <script
