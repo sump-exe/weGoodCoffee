@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2026 at 02:52 PM
+-- Generation Time: Nov 12, 2026 at 04:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `we_good_coffee`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inv_items`
+--
+
+CREATE TABLE `inv_items` (
+  `inventory_id` int(11) NOT NULL,
+  `menu_item_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -179,7 +202,33 @@ INSERT INTO `sessions` (`id`, `username`, `role`, `time_in`, `time_out`) VALUES
 (6, 'admin', 'admin', '2026-11-08 22:32:08', '2026-11-08 22:37:46'),
 (7, 'admin', 'admin', '2026-11-10 21:37:44', '2026-11-10 21:37:56'),
 (8, 'cashier', 'cashier', '2026-11-10 21:42:07', '2026-11-10 21:42:12'),
-(9, 'cashier', 'cashier', '2026-11-10 21:46:49', '2026-11-10 21:46:52');
+(9, 'cashier', 'cashier', '2026-11-10 21:46:49', '2026-11-10 21:46:52'),
+(10, 'admin', 'admin', '2026-11-11 13:18:19', '2026-11-11 13:18:31'),
+(11, 'cashier', 'cashier', '2026-11-11 13:18:55', '2026-11-11 13:18:58'),
+(12, 'inventory', 'inventory_staff', '2026-11-11 13:19:04', '2026-11-11 13:19:07'),
+(13, 'admin', 'admin', '2026-11-11 13:19:15', '2026-11-11 13:19:18'),
+(14, 'admin', 'admin', '2026-11-11 13:28:03', '2026-11-11 13:28:08'),
+(15, 'manager', 'manager', '2026-11-11 13:28:13', '2026-11-11 13:28:15'),
+(16, 'inventory', 'inventory_staff', '2026-11-11 13:28:40', '2026-11-11 13:29:37'),
+(17, 'admin', 'admin', '2026-11-11 13:31:02', '2026-11-11 13:31:05'),
+(18, 'manager', 'manager', '2026-11-11 13:31:10', '2026-11-11 13:31:19'),
+(19, 'inventory', 'inventory_staff', '2026-11-11 13:31:26', '2026-11-11 13:31:29'),
+(20, 'cashier', 'cashier', '2026-11-11 13:31:33', '2026-11-11 13:31:55'),
+(21, 'cashier', 'cashier', '2026-11-11 13:34:29', '2026-11-11 13:34:32'),
+(22, 'admin', 'admin', '2026-11-11 13:34:37', '2026-11-11 13:34:48'),
+(23, 'admin', 'admin', '2026-11-11 17:03:41', '2026-11-11 17:03:46'),
+(24, 'cashier', 'cashier', '2026-11-11 17:04:21', '2026-11-11 17:04:26'),
+(25, 'admin', 'admin', '2026-11-11 17:06:03', '2026-11-11 17:06:05'),
+(26, 'cashier', 'cashier', '2026-11-11 17:06:09', '2026-11-11 17:06:15'),
+(27, 'manager', 'manager', '2026-11-11 17:06:23', '2026-11-11 17:06:26'),
+(28, 'inventory', 'inventory_staff', '2026-11-11 17:06:35', '2026-11-11 17:06:40'),
+(29, 'cashier', 'cashier', '2026-11-11 17:07:08', '2026-11-11 17:07:10'),
+(30, 'admin', 'admin', '2026-11-11 17:07:13', '2026-11-11 17:07:15'),
+(31, 'manager', 'manager', '2026-11-11 17:07:18', '2026-11-11 17:07:20'),
+(32, 'inventory', 'inventory_staff', '2026-11-11 17:07:35', '2026-11-11 17:07:37'),
+(33, 'admin', 'admin', '2026-11-12 07:49:49', '2026-11-12 07:49:52'),
+(34, 'admin', 'admin', '2026-11-12 07:49:49', NULL),
+(35, 'admin', 'admin', '2026-11-12 07:53:53', '2026-11-12 07:53:57');
 
 -- --------------------------------------------------------
 
@@ -208,6 +257,19 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`, `created_at`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `inv_items`
+--
+ALTER TABLE `inv_items`
+  ADD PRIMARY KEY (`inventory_id`,`menu_item_id`),
+  ADD KEY `fk_inv_items_menu_item` (`menu_item_id`);
 
 --
 -- Indexes for table `menu_items`
@@ -246,6 +308,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
@@ -261,7 +329,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -272,6 +340,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `inv_items`
+--
+ALTER TABLE `inv_items`
+  ADD CONSTRAINT `fk_inv_items_inventory` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_inv_items_menu_item` FOREIGN KEY (`menu_item_id`) REFERENCES `menu_items` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order_items`
