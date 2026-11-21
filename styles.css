@@ -1,13 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;500;600;700&display=swap");
+
 :root {
     color-scheme: light;
-    --color-ink: #351d3d;
-    --color-muted: #795a6f;
-    --color-page: #fff1cc;
-    --color-surface: #fffaf0;
-    --color-surface-alt: #fff0c1;
-    --color-line: #efc96d;
-    --color-orange: #ff9800;
-    --color-orange-deep: #df5c1f;
+    --color-ink: #35211d;
+    --color-muted: #9a8378;
+    --color-page: #2f1f12;
+    --color-surface: #fffefc;
+    --color-surface-alt: #fff7f2;
+    --color-line: #eadfd8;
+    --color-orange: #c06b38;
+    --color-orange-deep: #c06b38;
     --color-yellow: #ffe136;
     --color-teal: #075e57;
     --color-pink: #ed7d9a;
@@ -331,6 +333,172 @@ a:focus-visible {
     color: var(--color-ink);
     font-size: 12px;
     font-weight: 600;
+}
+
+/* Dark shade design system */
+body {
+    background: #2f1f12;
+    font-family: "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+}
+
+.site-header {
+    min-height: 49px;
+    height: 49px;
+    padding: 0 32px;
+    border-bottom: 1px solid #a4582f;
+    background: #22150f;
+}
+
+.brand {
+    gap: 9px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+.brand::after {
+    content: "WeGoodCoffee";
+}
+.brand:hover {
+    color: #fff;
+}
+.brand-logo {
+    width: 27px;
+    height: 27px;
+    background: #fff;
+}
+
+.login-stage {
+    min-height: calc(100vh - 49px);
+    grid-template-columns: 260px 294px;
+    align-content: center;
+    justify-content: center;
+    gap: 130px;
+    padding: 38px 40px 58px;
+    background: #2f1f12;
+}
+
+.login-hero {
+    align-self: center;
+    padding-top: 18px;
+}
+.login-hero h1 {
+    margin: 0 0 20px;
+    color: #fff;
+    font-family: "Anton", Impact, "Arial Narrow", sans-serif;
+    font-size: 68px;
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: 0;
+}
+.login-hero p {
+    margin: 0;
+    color: #d3bd96;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.55;
+}
+
+.login-card {
+    width: 294px;
+    padding: 31px 29px 24px;
+    border: 0;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 8px 18px rgb(17 9 8 / 12%);
+    text-align: left;
+}
+.login-card h1 {
+    display: none;
+}
+.login-card-title {
+    margin: 0 0 4px;
+    color: #39231f;
+    font-family: "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+.login-card-subtitle {
+    margin: 0 0 18px;
+    color: #9b8780;
+    font-size: 12px;
+}
+
+.login-form label {
+    margin-bottom: 6px;
+    color: #5a493f;
+    font-size: 12px;
+    font-weight: 800;
+}
+.login-form input {
+    height: 43px;
+    margin-bottom: 14px;
+    border: 1px solid #e7e0dc;
+    border-radius: 8px;
+    background: #fff;
+    color: #39231f;
+    font-size: 13px;
+}
+.login-form input::placeholder {
+    color: #aaa09c;
+}
+.login-form input:focus {
+    border-color: #c06b38;
+    box-shadow: 0 0 0 3px rgb(192 107 56 / 12%);
+}
+.password-label label {
+    margin-bottom: 6px;
+}
+.login-form button {
+    min-height: 43px;
+    margin-top: 2px;
+    border-radius: 999px;
+    background: #c06b38;
+    font-size: 14px;
+    font-weight: 800;
+}
+.login-form button:hover {
+    background: #a9572d;
+}
+
+.admin-stage,
+.pos-page {
+    min-height: calc(100vh - 49px);
+    background: #2f1f12;
+}
+.admin-stage h1,
+.pos-page h1 {
+    color: #fff;
+    font-family: "Anton", Impact, "Arial Narrow", sans-serif;
+    font-weight: 400;
+}
+.admin-content,
+.pos-panel {
+    border: 0;
+    background: #fff;
+}
+
+@media (max-width: 900px) {
+    .login-stage {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding: 32px 20px;
+    }
+    .login-hero {
+        width: 294px;
+        justify-self: center;
+        padding-top: 0;
+    }
+    .login-hero h1 {
+        margin-bottom: 12px;
+        font-size: 58px;
+    }
+    .login-hero p {
+        font-size: 14px;
+    }
+    .login-card {
+        justify-self: center;
+    }
 }
 
 @media (max-width: 420px) {
