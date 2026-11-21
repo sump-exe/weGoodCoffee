@@ -485,11 +485,17 @@ body {
 .header-nav {
     display: flex;
     align-items: center;
-    gap: 22px;
+    align-self: stretch;
+    gap: 28px;
     height: 100%;
     margin-left: 8px;
 }
 .header-nav a {
+    position: relative;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 2px;
     color: #c8b8ae;
     font-size: 14px;
     font-weight: 600;
@@ -497,6 +503,15 @@ body {
 }
 .header-nav a.active {
     color: #fff;
+}
+.header-nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: #c06b38;
 }
 .header-nav a:hover {
     color: #fff;

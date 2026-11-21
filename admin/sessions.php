@@ -22,23 +22,18 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css?v=4">
+    <link rel="stylesheet" href="../styles.css?v=12">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Sessions | WeGoodCoffee</title>
 </head>
-<body>
+<body class="admin-page sessions-page">
     <header class="site-header">
         <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
-        <div class="dropdown ms-auto me-3">
-            <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Admin Menu
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="index.php">Users</a></li>
-                <li><a class="dropdown-item active" href="sessions.php" aria-current="page">View Sessions</a></li>
-            </ul>
-        </div>
-        <div class="d-flex align-items-center gap-3">
+        <nav class="header-nav" aria-label="Admin navigation">
+            <a href="index.php">Users</a>
+            <a class="active" href="sessions.php" aria-current="page">Sessions</a>
+        </nav>
+        <div class="header-account d-flex align-items-center gap-3">
             <?php app_render_user_profile(); ?>
             <form action="../logout.php" method="post">
                 <button class="btn btn-sm btn-light" type="submit">Log out</button>
