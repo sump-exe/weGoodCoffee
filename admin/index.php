@@ -27,23 +27,18 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css?v=4">
+    <link rel="stylesheet" href="../styles.css?v=9">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Admin | WeGoodCoffee</title>
 </head>
-<body>
+<body class="admin-page">
     <header class="site-header">
         <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
-        <div class="dropdown ms-auto me-3">
-            <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Admin Menu
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item active" href="index.php" aria-current="page">Users</a></li>
-                <li><a class="dropdown-item" href="sessions.php">View Sessions</a></li>
-            </ul>
-        </div>
-        <div class="d-flex align-items-center gap-3">
+        <nav class="header-nav" aria-label="Admin navigation">
+            <a class="active" href="index.php" aria-current="page">Users</a>
+            <a href="sessions.php">Sessions</a>
+        </nav>
+        <div class="header-account d-flex align-items-center gap-3">
             <?php app_render_user_profile(); ?>
             <form action="../logout.php" method="post">
                 <button class="btn btn-sm btn-light" type="submit">Log out</button>
@@ -57,6 +52,7 @@ try {
                 <div class="admin-heading row align-items-center g-3">
                     <div class="col">
                         <h1 id="users-title">Users</h1>
+                        <p class="admin-subtitle">Manage who can access the system.</p>
                     </div>
                     <div class="col-auto">
                         <a class="btn admin-add-button" href="addUser.php">Add User</a>
@@ -76,7 +72,6 @@ try {
                             <table class="table admin-table align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
                                         <th scope="col">Username</th>
                                         <th scope="col">Role</th>
                                         <th scope="col" class="text-end">Action</th>
@@ -85,14 +80,13 @@ try {
                                 <tbody>
                                     <?php if ($users === []): ?>
                                         <tr>
-                                            <td class="text-center text-muted py-4" colspan="4">No users found.</td>
+                                            <td class="text-center text-muted py-4" colspan="3">No users found.</td>
                                         </tr>
                                     <?php else: ?>
                                         <?php foreach ($users as $user): ?>
                                             <tr>
-                                                <th scope="row"><?= htmlspecialchars((string) $user['id'], ENT_QUOTES, 'UTF-8') ?></th>
                                                 <td><?= htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><span class="role-badge"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $user['role'])), ENT_QUOTES, 'UTF-8') ?></span></td>
+                                                <td><span class="role-badge role-badge-<?= htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars(ucwords(str_replace('_', ' ', $user['role'])), ENT_QUOTES, 'UTF-8') ?></span></td>
                                                 <td>
                                                     <div class="d-flex justify-content-end gap-2">
                                                         <a class="btn btn-sm admin-edit-button" href="editUser.php?id=<?= rawurlencode((string) $user['id']) ?>">Edit</a>
