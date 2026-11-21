@@ -354,12 +354,18 @@ body {
     color: #fff;
     font-size: 14px;
     font-weight: 700;
-}
-.brand::after {
-    content: "WeGoodCoffee";
+    text-decoration: none;
 }
 .brand:hover {
     color: #fff;
+}
+.brand-name {
+    color: #fff;
+    font-family: "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
 }
 .brand-logo {
     width: 27px;

@@ -33,7 +33,7 @@ try {
 </head>
 <body class="admin-page">
     <header class="site-header">
-        <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
+        <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""><span class="brand-name">WeGoodCoffee</span></a>
         <nav class="header-nav" aria-label="Admin navigation">
             <a class="active" href="index.php" aria-current="page">Users</a>
             <a href="sessions.php">Sessions</a>

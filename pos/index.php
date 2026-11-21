@@ -20,7 +20,7 @@ $menuState = pos_load_menu($conn);
 </head>
 <body class="pos-page-body">
     <header class="site-header">
-        <a class="brand" href="../index.php" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
+        <a class="brand" href="../index.php" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""><span class="brand-name">WeGoodCoffee</span></a>
         <div class="d-flex align-items-center gap-3 ms-auto">
             <?php app_render_user_profile(); ?>
             <form action="../logout.php" method="post">

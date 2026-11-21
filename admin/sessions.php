@@ -28,7 +28,7 @@ try {
 </head>
 <body class="admin-page sessions-page">
     <header class="site-header">
-        <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
+        <a class="brand" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""><span class="brand-name">WeGoodCoffee</span></a>
         <nav class="header-nav" aria-label="Admin navigation">
             <a href="index.php">Users</a>
             <a class="active" href="sessions.php" aria-current="page">Sessions</a>
