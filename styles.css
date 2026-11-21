@@ -798,6 +798,169 @@ body {
     font-weight: 700;
 }
 
+/* Inventory staff interface */
+.inventory-page .site-header {
+    border-bottom: 1px solid #a4582f;
+}
+.inventory-page .user-profile {
+    color: #fff;
+}
+.inventory-page .user-profile img {
+    display: none;
+}
+.inventory-page .site-header .btn-light {
+    border: 0;
+    background: transparent;
+    color: #fff;
+}
+.inventory-page .admin-stage {
+    min-height: calc(100vh - 49px);
+    padding: 34px 32px 60px;
+    background: #2f1f12;
+}
+.inventory-page .admin-stage > .container {
+    max-width: 1160px;
+}
+.inventory-heading h1 {
+    margin: 0 0 7px;
+    color: #fff;
+    font-family: "Anton", Impact, "Arial Narrow", sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+}
+.inventory-heading p {
+    margin: 0;
+    color: #d3bd96;
+    font-size: 16px;
+}
+.inventory-card,
+.inventory-page .admin-content {
+    border: 0;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 10px 24px rgb(20 11 8 / 16%);
+}
+.inventory-card {
+    min-height: 230px;
+    padding: 20px;
+}
+.inventory-card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+.inventory-card-heading h2,
+.inventory-page .admin-content h2 {
+    margin: 0;
+    color: #35231f;
+    font-family: "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+}
+.inventory-tools {
+    display: flex;
+    gap: 8px;
+}
+.inventory-tools input {
+    width: 180px;
+    height: 42px;
+    border: 1px solid #e1dad5;
+    border-radius: 9px;
+    padding: 0 12px;
+    background: #fff;
+    color: #35231f;
+}
+.inventory-tools input::placeholder {
+    color: #aaa09b;
+}
+.inventory-add-button {
+    min-height: 42px;
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 17px;
+    background: #b95f30;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+}
+.inventory-add-button:hover {
+    background: #9d4d25;
+}
+.inventory-card .admin-table-wrap,
+.inventory-page .admin-content .admin-table-wrap {
+    border: 0;
+    border-radius: 11px;
+}
+.inventory-card .admin-table thead th,
+.inventory-page .admin-content .admin-table thead th {
+    height: 44px;
+    padding: 10px 14px;
+    border: 0;
+    background: #3a1f1a;
+    color: #fff;
+    font-size: 13px;
+}
+.inventory-card .admin-table tbody td,
+.inventory-page .admin-content .admin-table tbody td {
+    padding: 13px 14px;
+    border-color: #eee7e2;
+    color: #51443d;
+}
+.inventory-empty-row td {
+    height: 138px;
+    padding: 28px 14px !important;
+}
+.inventory-empty {
+    min-height: 112px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 2px dashed #ddd1c8;
+    border-radius: 10px;
+    color: #51443d;
+    text-align: center;
+}
+.inventory-empty strong {
+    font-size: 15px;
+}
+.inventory-empty span {
+    color: #9a8a80;
+    font-size: 13px;
+}
+.inventory-select-button {
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    border: 1px solid #b9ada5;
+    border-radius: 999px;
+    padding: 5px 12px;
+    color: #51443d;
+    text-decoration: none;
+}
+.inventory-select-button:hover {
+    border-color: #b95f30;
+    color: #b95f30;
+}
+.inventory-page .admin-content {
+    min-height: 135px;
+    padding: 20px;
+}
+.inventory-page .admin-content h2 {
+    margin-bottom: 12px;
+}
+.inventory-page .admin-content p,
+.inventory-page .admin-content .text-muted {
+    color: #9a8a80 !important;
+}
+.inventory-modal {
+    border: 0;
+    border-radius: 16px;
+}
+
 @media (max-width: 900px) {
     .login-stage {
         grid-template-columns: 1fr;
@@ -818,6 +981,17 @@ body {
     }
     .login-card {
         justify-self: center;
+    }
+    .inventory-card-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .inventory-tools {
+        width: 100%;
+    }
+    .inventory-tools input {
+        flex: 1;
+        width: auto;
     }
 }
 

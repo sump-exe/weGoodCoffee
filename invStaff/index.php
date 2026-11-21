@@ -7,11 +7,11 @@ app_require_role('inventory_staff');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css?v=4">
+    <link rel="stylesheet" href="../styles.css?v=11">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <title>Inventory Staff | WeGoodCoffee</title>
 </head>
-<body>
+<body class="inventory-page">
     <header class="site-header">
         <a class="brand" href="../index.php" aria-label="WeGoodCoffee home"><img class="brand-logo" src="../img/logo.png" alt=""></a>
         <div class="d-flex align-items-center gap-3 ms-auto">
@@ -23,19 +23,21 @@ app_require_role('inventory_staff');
     </header>
     <main class="admin-stage container-fluid">
         <div class="container">
-            <section class="mb-4" aria-labelledby="inventory-title">
+            <section class="inventory-heading mb-4" aria-labelledby="inventory-title">
                 <h1 id="inventory-title">Inventory Staff</h1>
+                <p>Track stock and see which menu items use it.</p>
             </section>
             <div class="row g-4 align-items-start">
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <?php require __DIR__ . '/inventoryList.php'; ?>
                 </div>
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <?php require __DIR__ . '/menuItemList.php'; ?>
                 </div>
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script
         src="<?= htmlspecialchars(app_base_path() . '/session.js', ENT_QUOTES, 'UTF-8') ?>"
         data-logout-url="<?= htmlspecialchars(app_base_path() . '/logout.php', ENT_QUOTES, 'UTF-8') ?>"
