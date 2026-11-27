@@ -430,6 +430,59 @@ body {
     font-size: 12px;
 }
 
+.login-card .alert {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 14px;
+    padding: 8px 10px;
+    border: 1px solid;
+    border-radius: 7px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+.login-card .alert-warning {
+    border-color: #e8c67a;
+    background: #fff8e7;
+    color: #76551a;
+}
+.login-card .alert-success {
+    border-color: #a9d2b2;
+    background: #eff8f0;
+    color: #315d3a;
+}
+.login-card .alert-danger {
+    border-color: #e4b1a9;
+    background: #fff1ef;
+    color: #8d352b;
+}
+.login-card .alert > span {
+    min-width: 0;
+}
+.login-card .alert .btn-close {
+    position: relative;
+    flex: 0 0 16px;
+    width: 16px;
+    height: 18px;
+    margin: -1px -2px 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+.login-card .alert .btn-close::before {
+    content: "\00d7";
+    font-size: 19px;
+    line-height: 1;
+}
+.login-card .alert .btn-close:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+}
+
 .login-form label {
     margin-bottom: 6px;
     color: #5a493f;

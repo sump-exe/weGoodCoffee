@@ -72,7 +72,7 @@ if ($requestMethod === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff9800">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css?v=8">
+    <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
     <header class="site-header">
@@ -91,18 +91,18 @@ if ($requestMethod === 'POST') {
 
             <?php if (($_GET['expired'] ?? '') === '1'): ?>
                 <div class="alert alert-warning alert-dismissible" role="status">
-                    Your session ended after 5 minutes of inactivity. Please log in again.
+                    <span>Your session ended after 5 minutes of inactivity. Please log in again.</span>
                     <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
                 </div>
             <?php elseif ($loggedOut): ?>
                 <div class="alert alert-success alert-dismissible" role="status">
-                    You have been logged out.
+                    <span>You have been logged out.</span>
                     <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
                 </div>
             <?php endif; ?>
             <?php if ($error !== ''): ?>
                 <div class="alert alert-danger<?= $error === 'Invalid username or password.' ? ' alert-dismissible' : '' ?>" role="alert">
-                    <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+                    <span><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></span>
                     <?php if ($error === 'Invalid username or password.'): ?>
                         <button type="button" class="btn-close" data-dismiss-alert aria-label="Dismiss message"></button>
                     <?php endif; ?>
