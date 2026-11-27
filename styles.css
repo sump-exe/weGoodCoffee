@@ -1144,11 +1144,27 @@ body {
     color: #b95f30;
 }
 .inventory-page .admin-content {
+    position: relative;
     min-height: 135px;
     padding: 20px;
 }
 .inventory-page .admin-content h2 {
     margin-bottom: 12px;
+}
+.menu-items-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.menu-items-heading h2 {
+    margin: 0 !important;
+}
+.menu-items-heading .inventory-select-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 .inventory-page .admin-content p,
 .inventory-page .admin-content .text-muted {
@@ -1157,6 +1173,38 @@ body {
 .inventory-modal {
     border: 0;
     border-radius: 16px;
+}
+.inventory-menu-options {
+    max-height: 340px;
+    overflow-y: auto;
+    border: 1px solid #e1dad5;
+    border-radius: 9px;
+}
+.inventory-menu-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0;
+    padding: 9px 11px;
+    border-bottom: 1px solid #eee7e2;
+    color: #51443d;
+    cursor: pointer;
+    font-size: 14px;
+}
+.inventory-menu-option:last-child {
+    border-bottom: 0;
+}
+.inventory-menu-option input {
+    flex: 0 0 auto;
+    margin-top: 4px;
+}
+.inventory-menu-option span {
+    display: flex;
+    flex-direction: column;
+}
+.inventory-menu-option small {
+    color: #9a8a80;
+    font-size: 11px;
 }
 
 @media (max-width: 900px) {

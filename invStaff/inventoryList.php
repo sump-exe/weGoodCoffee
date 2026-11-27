@@ -4,7 +4,7 @@ require_once __DIR__ . '/../_conn.php';
 $inventoryItems = [];
 $inventoryError = '';
 
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && ($_POST['action'] ?? '') === 'add_stock') {
     $name = trim((string) ($_POST['name'] ?? ''));
     $quantity = filter_var($_POST['quantity'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
 
@@ -89,6 +89,7 @@ try {
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content inventory-modal">
             <form method="post">
+                <input type="hidden" name="action" value="add_stock">
                 <div class="modal-header">
                     <h2 class="modal-title fs-5" id="addStockModalTitle">Add stock item</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
