@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2026 at 08:56 AM
+-- Generation Time: Nov 27, 2026 at 09:05 AM
 -- Server version: 10.11.16-MariaDB
 -- PHP Version: 8.5.12
 
@@ -30,8 +30,26 @@ SET time_zone = "+00:00";
 CREATE TABLE `inventory` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `category` enum('Meat','Pasta','Sauce') NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `name`, `category`, `quantity`) VALUES
+(1, 'Tonkatsu', 'Meat', 0),
+(2, 'Bacon', 'Meat', 0),
+(3, 'Hungarian', 'Meat', 0),
+(4, 'Lasagna', 'Pasta', 0),
+(5, 'Linguine', 'Pasta', 0),
+(6, 'Penne', 'Pasta', 0),
+(7, 'Ketchup', 'Sauce', 0),
+(8, 'Soy Sauce', 'Sauce', 0),
+(9, 'Vinegar', 'Sauce', 0),
+(10, 'Oil', 'Sauce', 0),
+(11, 'Seasoning', 'Sauce', 0);
 
 -- --------------------------------------------------------
 
@@ -257,7 +275,8 @@ INSERT INTO `sessions` (`id`, `username`, `role`, `time_in`, `time_out`) VALUES
 (61, 'inventory', 'inventory_staff', '2026-11-21 19:36:17', '2026-11-21 19:36:20'),
 (62, 'admin', 'admin', '2026-11-26 23:28:08', '2026-11-26 23:28:17'),
 (63, 'manager', 'manager', '2026-11-26 23:28:27', '2026-11-26 23:28:33'),
-(64, 'manager', 'manager', '2026-11-26 23:46:21', '2026-11-26 23:46:30');
+(64, 'manager', 'manager', '2026-11-26 23:46:21', '2026-11-26 23:46:30'),
+(65, 'inventory', 'inventory_staff', '2026-11-27 16:04:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -340,7 +359,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `menu_items`
@@ -358,7 +377,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `users`
